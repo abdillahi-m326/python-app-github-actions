@@ -30,3 +30,11 @@ jobs:
       - name: Notify us
         if: success()
         run: echo "Tests passed on Python ${{ matrix.python-version }}"
+
+      - name: using secrets
+        run: echo "this is the secret ${{secrets.MY_SECRET}}"
+
+      - name: using secrets with environment varibales
+        run: echo "this is an env secret- $MY_SECRET"
+        env:
+          MY_SECRET: ${{secrets.MY_SECRET}}
