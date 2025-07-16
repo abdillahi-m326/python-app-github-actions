@@ -11,22 +11,22 @@ jobs:
         python-version: [3.6.14, 3.6.15, 3.6.16]
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-        #set up pyhton environment
-
-      - name: setup python
+      - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{matrix.python-version}}
+          python-version: ${{ matrix.python-version }}
 
-        # install the dependencies needed
-      - name: install dependencies
-        run: python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirments.txt; fi
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-        # notify when tests are successfull
-      - name: notify us
-        run: echo "Test passed on ${{matrix.python-version}}"
+      - name: Run tests
+        run: python test_hello.py
+
+      - name: Notify us
         if: success()
+        run: echo "Tests passed on Python ${{ matrix.python-version }}"
